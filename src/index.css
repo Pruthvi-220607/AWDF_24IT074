@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap');
+
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-primary: #0f0f1a;
+  --bg-card: #1a1a2e;
+  --bg-card-hover: #16213e;
+  --accent: #e94560;
+  --accent-2: #0f3460;
+  --text-primary: #eaeaea;
+  --text-muted: #a0a0b0;
+  --skill-bg: #0f3460;
+  --skill-hover: #e94560;
+  --border: rgba(255,255,255,0.08);
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --radius: 16px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.7;
+}
+
+/* ── App wrapper ── */
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+header {
+  padding: 60px 24px 40px;
+  text-align: center;
+  background: linear-gradient(135deg, #16213e 0%, #0f3460 50%, #e94560 100%);
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% -20%, rgba(233,69,96,0.3) 0%, transparent 60%);
+}
+.header-content { position: relative; z-index: 1; }
+.header-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+  animation: fadeDown 0.8s ease both;
+}
+.header-subtitle {
+  margin-top: 12px;
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.75);
+  font-weight: 300;
+  letter-spacing: 1px;
+  animation: fadeDown 0.8s 0.2s ease both;
+}
+
+/* ── Main ── */
+.main-content {
+  flex: 1;
+  max-width: 900px;
+  width: 100%;
+  margin: 40px auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ── Card ── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px 40px;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeUp 0.6s ease both;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+}
+
+/* ── Section Titles ── */
+.section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+}
+
+/* ── About ── */
+.about-section {}
+.about-text {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 14px;
+  line-height: 1.8;
+}
+.about-text:last-child { margin-bottom: 0; }
+
+/* ── Skills ── */
+.skills-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+.skill-item {
+  background: var(--skill-bg);
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 100px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.1);
+  cursor: default;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+.skill-item:hover {
+  background: var(--skill-hover);
+  transform: scale(1.06);
+}
+
+/* ── Footer ── */
+.footer {
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 28px 24px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.footer p { margin: 4px 0; }
+.footer-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.footer-link:hover { color: #fff; }
+.footer-copy { margin-top: 8px; font-size: 0.8rem; color: #555; }
+
+/* ── Animations ── */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .card { padding: 24px 20px; }
+  header { padding: 48px 16px 32px; }
+}
