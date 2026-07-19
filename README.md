@@ -1,16 +1,39 @@
-# React + Vite
+# 🎓 React Student Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A modern, responsive single-page web application built with **React**, **Vite**, and **React Router**. This repository is updated to complete the requirements of **Practical 2: State Management and Routing**.
 
-Currently, two official plugins are available:
+## 🌟 Key Features (Practical 2)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Client-Side Routing**: Implemented multi-page navigation using `react-router-dom` v6 without page reloads.
+  - `/` — **Home Page**: Renders the dynamic `About` section and custom `Skills` components.
+  - `/projects` — **Projects Page**: Shows a grid layout showcasing mock projects with tags and links.
+  - `/contact` — **Contact Page**: Features an interactive form for user input.
+- **Reactive State Management (`useState`)**:
+  - **Controlled Inputs**: The contact form captures user details and input in real time.
+  - **Live Character Count**: Displays message character counts with dynamic feedback warnings (warn/danger colors as it approaches the 500 limit).
+  - **UI Toggle (Help Tooltip)**: Interactive help tooltip on the message field toggleable by a button.
+  - **Theme Toggle (Light/Dark Mode)**: Toggles the website look by dynamically adding a `.light-mode` class on the root element.
+- **Custom 404 Route**: Handles unknown routes/paths gracefully with a themed error page and a "Back to Home" button.
 
-## React Compiler
+## 🛠️ Tech Stack & Dependencies
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework/Build**: React (v19+), Vite (v8+)
+- **Routing**: `react-router-dom` (v6+)
+- **Styling**: Vanilla CSS with CSS Variables for theme transitioning
 
-## Expanding the Oxlint configuration
+## 🚀 Setup and Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Run the local development server:
+   ```bash
+   npm run dev
+   ```
+
+3. Build the application for production:
+   ```bash
+   npm run build
+   ```
