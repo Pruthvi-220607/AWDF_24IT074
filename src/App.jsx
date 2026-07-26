@@ -26,7 +26,7 @@ function App() {
   return (
     <div className="app-wrapper">
       <NavBar isLightMode={isLightMode} toggleTheme={toggleTheme} />
-      <Header name="Pruthviraj" />
+      <Header name="Pruthvi" />
       <main className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
