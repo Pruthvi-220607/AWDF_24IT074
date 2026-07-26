@@ -1,56 +1,131 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import Spinner from '../components/Spinner';
+import ErrorMessage from '../components/ErrorMessage';
+import RepoList from '../components/RepoList';
 
-const projectList = [
-  {
-    id: 1,
-    title: '🚀 Developer Portfolio',
-    description: 'A modern, responsive developer portfolio showcasing projects, skills, and contact information with a seamless dark/light mode toggle.',
-    tags: ['React', 'Vite', 'Vanilla CSS', 'React Router'],
-    demoUrl: '#',
-    githubUrl: '#'
-  },
-  {
-    id: 2,
-    title: '📈 Task Dashboard',
-    description: 'An interactive productivity dashboard featuring drag-and-drop task boards, state management, progress analytics, and custom templates.',
-    tags: ['React', 'State Hooks', 'CSS Grid', 'LocalStorage'],
-    demoUrl: '#',
-    githubUrl: '#'
-  },
-  {
-    id: 3,
-    title: '🧠 AI Assistant Interface',
-    description: 'A responsive chat interface styling with speech-to-text, message history, live search filters, and smooth markdown messaging output.',
-    tags: ['React', 'OpenAI API', 'CSS Flexbox', 'Web Speech API'],
-    demoUrl: '#',
-    githubUrl: '#'
-  }
-];
+// ─────────────────────────────────────────────
+// GitHub username whose public repos to display
+// ─────────────────────────────────────────────
+const GITHUB_USERNAME = 'torvalds'; // Change to your GitHub username
 
+/**
+ * Projects Page — Practical 3
+ *
+ * Demonstrates:
+ *  • useEffect to trigger a side-effect (fetch) on component mount
+ *  • Three-state async management: loading | error | success
+ *  • Conditional rendering based on those states
+ *  • Supplementary: retry button, search filter, star count display
+ */
 function Projects() {
+  // ── State ──────────────────────────────────
+  const [repos, setRepos]       = useState([]);      // raw API data
+  const [loading, setLoading]   = useState(true);    // true while request is in flight
+  const [error, setError]       = useState(null);    // holds error message string on failure
+  const [search, setSearch]     = useState('');      // controlled search input
+  const [fetchKey, setFetchKey] = useState(0);       // increment to re-trigger useEffect (retry)
+
+  // ── Fetch on mount (and on retry) ──────────
+  useEffect(() => {
+    // Reset state before every new request
+    setLoading(true);
+    setError(null);
+    setRepos([]);
+
+    const apiUrl = `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=30&sort=updated`;
+
+    fetch(apiUrl)
+      .then((res) => {
+        // HTTP-level error (e.g., 404, 403 rate-limit)
+        if (!res.ok) {
+          throw new Error(`GitHub API responded with status ${res.status}: ${res.statusText}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setRepos(data);
+      })
+      .catch((err) => {
+        setError(err.message);
+      })
+      .finally(() => {
+        // Always clear loading — whether success or failure
+        setLoading(false);
+      });
+  }, [fetchKey]); // Re-runs only when fetchKey changes (retry mechanism)
+
+  // ── Retry handler — increments fetchKey to re-trigger useEffect
+  const handleRetry = useCallback(() => {
+    setFetchKey((prev) => prev + 1);
+  }, []);
+
+  // ── Derived: filter repos by search term ───
+  const filteredRepos = repos.filter((repo) =>
+    repo.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  // ── Render ─────────────────────────────────
   return (
-    <section className="projects-section">
+    <section className="projects-section" aria-label="GitHub Projects">
       <div className="card">
-        <h2 className="section-title">📂 My Projects</h2>
-        <div className="projects-grid">
-          {projectList.map((project) => (
-            <div key={project.id} className="card project-card">
-              <div className="project-content">
-                <h3 className="project-title">{project.title}</h3>
-                <p className="project-desc">{project.description}</p>
-                <div className="project-tags">
-                  {project.tags.map((tag) => (
-                    <span key={tag} className="project-tag">{tag}</span>
-                  ))}
-                </div>
-              </div>
-              <div className="project-links">
-                <a href={project.demoUrl} className="project-link primary">Live Demo</a>
-                <a href={project.githubUrl} className="project-link secondary">GitHub</a>
-              </div>
+        <h2 className="section-title">📂 GitHub Repositories</h2>
+
+        {/* Search bar — only shown once data has loaded */}
+        {!loading && !error && (
+          <div className="repo-search-bar">
+            <span className="repo-search-icon" aria-hidden="true">🔍</span>
+            <input
+              id="repo-search-input"
+              type="text"
+              className="repo-search-input"
+              placeholder="Search repositories by name…"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              aria-label="Filter repositories by name"
+            />
+            {search && (
+              <button
+                id="repo-search-clear"
+                className="repo-search-clear"
+                onClick={() => setSearch('')}
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* ── Conditional Rendering based on async state ── */}
+
+        {/* 1. Loading state */}
+        {loading && <Spinner />}
+
+        {/* 2. Error state */}
+        {!loading && error && (
+          <ErrorMessage message={error} onRetry={handleRetry} />
+        )}
+
+        {/* 3. Success state — show count badge + repo list */}
+        {!loading && !error && (
+          <>
+            <div className="repo-count-badge" aria-live="polite">
+              Showing{' '}
+              <strong>{filteredRepos.length}</strong> of{' '}
+              <strong>{repos.length}</strong> repositories for{' '}
+              <a
+                href={`https://github.com/${GITHUB_USERNAME}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="repo-username-link"
+                id="github-profile-link"
+              >
+                @{GITHUB_USERNAME}
+              </a>
             </div>
-          ))}
-        </div>
+            <RepoList repos={filteredRepos} />
+          </>
+        )}
       </div>
     </section>
   );
