@@ -813,3 +813,485 @@ textarea.form-input {
   .navbar-links { gap: 12px; }
   .repo-grid { grid-template-columns: 1fr; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   Practical 6 — Full-Stack Integration: Tasks Page Styles
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Tasks Section ── */
+.tasks-section {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ── Task Form Card ── */
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 12px;
+}
+.task-form-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+.form-group-check {
+  justify-content: center;
+  align-self: flex-end;
+  padding-bottom: 10px;
+}
+.check-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  user-select: none;
+}
+.task-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.form-select {
+  cursor: pointer;
+}
+.form-error {
+  color: var(--accent);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 8px 12px;
+  background: rgba(233,69,96,0.08);
+  border: 1px solid rgba(233,69,96,0.25);
+  border-radius: 8px;
+  animation: fadeUp 0.3s ease both;
+}
+.task-form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+/* ── Generic Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(233,69,96,0.3);
+}
+.btn-primary:hover:not(:disabled) {
+  background: #ff5775;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(233,69,96,0.4);
+}
+.btn-secondary {
+  background: rgba(255,255,255,0.06);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(255,255,255,0.1);
+  transform: translateY(-1px);
+}
+:root.light-mode .btn-secondary {
+  background: rgba(0,0,0,0.04);
+}
+.btn-danger {
+  background: #ef4444;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(239,68,68,0.3);
+}
+.btn-danger:hover:not(:disabled) {
+  background: #f87171;
+  transform: translateY(-2px);
+}
+
+/* ── Task List ── */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+/* ── Task Card ── */
+.task-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+  animation: fadeUp 0.35s ease both;
+}
+.task-card:hover {
+  border-color: rgba(233,69,96,0.35);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+  background: rgba(255,255,255,0.05);
+}
+:root.light-mode .task-card {
+  background: rgba(0,0,0,0.02);
+}
+:root.light-mode .task-card:hover {
+  background: rgba(0,0,0,0.04);
+}
+.task-card--done {
+  opacity: 0.65;
+}
+
+.task-toggle {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: transform 0.2s;
+}
+.task-toggle:hover {
+  transform: scale(1.15);
+}
+
+.task-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.task-header-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.task-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+.task-title--done {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+.task-priority-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 9px;
+  border-radius: 100px;
+  flex-shrink: 0;
+}
+.task-desc {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-top: 2px;
+}
+.task-date {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  opacity: 0.6;
+  margin-top: 4px;
+}
+
+.task-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+  align-self: center;
+}
+.task-action-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+.task-edit-btn:hover {
+  background: rgba(245,158,11,0.12);
+  border-color: rgba(245,158,11,0.4);
+  transform: scale(1.1);
+}
+.task-delete-btn:hover {
+  background: rgba(239,68,68,0.12);
+  border-color: rgba(239,68,68,0.4);
+  transform: scale(1.1);
+}
+
+/* ── Empty State ── */
+.tasks-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 60px 24px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-style: italic;
+}
+.tasks-empty-icon {
+  font-size: 2.5rem;
+}
+
+/* ── Delete Confirm Overlay ── */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.confirm-box {
+  max-width: 360px;
+  width: 90%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: scaleIn 0.25s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes scaleIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+.confirm-icon {
+  font-size: 2.6rem;
+}
+.confirm-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.confirm-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.confirm-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+/* ── Toast Notification ── */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 1000;
+  padding: 14px 22px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  max-width: 340px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+  animation: toastIn 0.35s cubic-bezier(0.34,1.56,0.64,1), toastOut 0.3s ease 2.9s forwards;
+  backdrop-filter: blur(8px);
+}
+.toast--success {
+  background: rgba(34,197,94,0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34,197,94,0.35);
+}
+.toast--error {
+  background: rgba(239,68,68,0.15);
+  color: #f87171;
+  border: 1px solid rgba(239,68,68,0.35);
+}
+@keyframes toastIn {
+  from { transform: translateY(20px) scale(0.9); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes toastOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(10px); }
+}
+/* ══════════════════════════════════════════════════════════════
+   Practical 7 — Authentication: Auth Page Styles
+   ══════════════════════════════════════════════════════════════ */
+
+.auth-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 200px);
+  padding: 20px;
+}
+
+.auth-card {
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  padding: 48px 40px !important;
+}
+
+.auth-logo {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.auth-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.auth-subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 8px;
+  background: rgba(255,255,255,0.03);
+  padding: 6px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+}
+:root.light-mode .auth-tabs {
+  background: rgba(0,0,0,0.02);
+}
+
+.auth-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.auth-tab:hover:not(.auth-tab--active) {
+  color: var(--text-primary);
+  background: rgba(255,255,255,0.02);
+}
+:root.light-mode .auth-tab:hover:not(.auth-tab--active) {
+  background: rgba(0,0,0,0.02);
+}
+.auth-tab--active {
+  background: var(--bg-card);
+  color: var(--accent);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border: 1px solid var(--border);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.auth-submit {
+  margin-top: 12px;
+  padding: 14px;
+  font-size: 1rem;
+}
+
+.auth-success {
+  background: rgba(34,197,94,0.1);
+  color: #4ade80;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(34,197,94,0.25);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  animation: fadeUp 0.3s ease;
+}
+
+.auth-switch {
+  margin-top: 24px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.auth-switch-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: inherit;
+  padding: 0;
+  font-family: inherit;
+}
+.auth-switch-btn:hover {
+  text-decoration: underline;
+}
+
+/* Nav auth buttons */
+.nav-auth-btn {
+  padding: 6px 14px;
+  font-size: 0.9rem;
+}
+.nav-login-link {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(233,69,96,0.1);
+  color: var(--accent) !important;
+  border: 1px solid rgba(233,69,96,0.2);
+  border-radius: 8px;
+  font-weight: 600;
+}
+.nav-login-link:hover {
+  background: var(--accent) !important;
+  color: #fff !important;
+}
